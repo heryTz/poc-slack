@@ -13,6 +13,7 @@ services:
       - ./front/public/:/app/public
       - ./front/index.html:/app/index.html
       - ./front/vite.config.ts/:/app/vite.config.ts
+      - ./front/tailwind.config.js/:/app/tailwind.config.js
     ports:
       - 3001:5173
     env_file:
