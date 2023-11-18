@@ -1,14 +1,19 @@
 import { PropsWithChildren } from "react";
 import { AppBar } from "../appbar";
 import { MarkdownInput } from "../form";
+import { Button } from "../button";
 
 export function ChatLayout({ title, children }: ChatLayoutProps) {
   return (
     <div className="min-h-screen flex flex-col">
       <AppBar title={title} />
-      <div className="p-6 flex-1">{children}</div>
-      <div className="sticky bottom-6 px-6">
-        <MarkdownInput />
+      <div className="flex-1">{children}</div>
+      <div className="sticky bottom-0 mx-6 pb-6 bg-white">
+        <MarkdownInput
+          placeholder="Envoyer un message #general"
+          className="!border-gray-400"
+        />
+        <Button className="mt-2">Envoyer</Button>
       </div>
     </div>
   );

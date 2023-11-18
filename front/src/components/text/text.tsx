@@ -30,6 +30,12 @@ export function Text({ as, className, children }: TextProps) {
     );
   }
 
+  if (as === "h4") {
+    return (
+      <h4 className={classNames("font-bold", className)}>{children}</h4>
+    );
+  }
+
   if (as === "span") {
     return (
       <span className={classNames("text-gray-500", className)}>{children}</span>
@@ -40,6 +46,6 @@ export function Text({ as, className, children }: TextProps) {
 }
 
 type TextProps = PropsWithChildren<{
-  as?: "p" | "h1" | "h2" | "h3" | "span";
+  as?: "p" | "h1" | "h2" | "h3" | "h4" | "span";
   className?: string;
 }>;

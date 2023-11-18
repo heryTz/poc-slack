@@ -7,13 +7,13 @@ import { AppBar } from "../appbar";
 
 export function ChannelLayout() {
   return (
-    <div className="grid grid-cols-[300px_1fr_400px]">
-      <div className="min-h-screen flex flex-col">
+    <div className="grid grid-cols-[300px_1fr_400px] ">
+      <div className="min-h-screen flex flex-col bg-slate-50">
         <AppBar
           title="Hery Nirintsoa"
           toolbar={<IconButton Element={PencilSquareIcon} />}
         />
-        <div className="flex flex-col gap-4 p-6 bg-slate-100 flex-1">
+        <div className="flex flex-col gap-4 p-6 flex-1">
           <ChannelMenu
             title="Canaux"
             links={[
@@ -44,10 +44,10 @@ export function ChannelLayout() {
           />
         </div>
       </div>
-      <div className="border-l border-slate-50 shadow-xl bg-slate-50">
+      <div className="border-l border-slate-50 shadow-lg">
         <Outlet />
       </div>
-      <div className="border-l border-slate-50 shadow-2xl"></div>
+      <div className="border-l border-slate-50 shadow-xl"></div>
     </div>
   );
 }

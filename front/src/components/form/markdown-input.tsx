@@ -1,3 +1,19 @@
-export function MarkdownInput() {
-  return <>markdown-input</>;
+import classNames from "classnames";
+
+export function MarkdownInput({ placeholder, className }: MarkdownInputProps) {
+  return (
+    <textarea
+      rows={4}
+      className={classNames(
+        "block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500",
+        className
+      )}
+      placeholder={placeholder}
+    ></textarea>
+  );
 }
+
+type MarkdownInputProps = {
+  placeholder: string;
+  className?: string;
+};
