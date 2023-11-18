@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  front:
+    image: novity-slack-front
+    container_name: novity-slack-front
+    build:
+      target: dev
+      context: ./front
+    working_dir: /app
+    volumes:
+      - ./front/src/:/app/src
+      - ./front/public/:/app/public
+      - ./front/index.html:/app/index.html
+      - ./front/vite.config.ts/:/app/vite.config.ts
+    ports:
+      - 3001:5173
+    env_file:
+      - ./front/.env
+
+  api:
+    image: novity-slack-back
+    container_name: novity-slack-back
+    build:
+      target: dev
+      context: ./back
+    working_dir: /app
+    volumes:
+      - ./back/src/:/app/src
+      - ./back/nest-cli.json:/app/nest-cli.json
+      - ./back/test/:/app/test
+    ports:
+      - 3000:3000
+    env_file:
+      - ./back/.env
