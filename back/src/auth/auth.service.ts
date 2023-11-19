@@ -5,6 +5,7 @@ import { UtilService } from 'src/util/util.service';
 import dayjs from 'dayjs';
 import { CreateUserInput } from 'src/users/dto/create-user.input';
 import { VerifyOtpInput } from './dto/verify-otp.input';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
@@ -12,6 +13,7 @@ export class AuthService {
     private usersService: UsersService,
     private utilSevice: UtilService,
     private prisma: PrismaService,
+    private jwtService: JwtService,
   ) {}
 
   async signin(email: string) {
@@ -44,9 +46,11 @@ export class AuthService {
       data: { otp: null, otpExpiration: null },
     });
 
+    const payload = { sub: user.id, email: user.email, name: user.name };
+
     return {
-      token: 'xx',
-      refreshToken: 'xxx',
+      token: await this.jwtService.signAsync(payload),
+      refreshToken: 'xx', // TODO: handle refresh token rotation
       data,
     };
   }
