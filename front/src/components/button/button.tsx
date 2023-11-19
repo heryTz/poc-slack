@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import { MouseEventHandler, PropsWithChildren, ReactNode } from "react";
+import { Spin } from "../loader";
 
 export function Button({
   children,
@@ -10,29 +11,31 @@ export function Button({
   onClick,
   startIcon,
   endIcon,
+  loading,
 }: ButtonProps) {
-  let classes = "flex items-center gap-2 ";
-  if (variant === "primary") {
-    classes +=
-      "text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg focus:outline-none ";
-  } else if (variant === "nude") {
-    classes += "hover:bg-gray-100 font-medium rounded-lg ";
-  }
-
-  if (size === "md") {
-    classes += "text-sm px-5 py-2.5";
-  } else if (size === "sm") {
-    classes += "px-3 py-2 text-xs";
-  } else if (size === "xs") {
-    classes += "px-3 py-2 text-xs";
-  }
+  const disable = disabled || loading;
 
   return (
     <button
-      className={classNames(classes, className)}
-      disabled={disabled}
+      className={classNames(
+        "flex items-center justify-center gap-2",
+        {
+          "text-white bg-blue-700 font-medium rounded-lg ":
+            variant === "primary",
+          "hover:bg-blue-800 focus:ring-4 focus:ring-blue-300  focus:outline-none":
+            variant === "primary" && !disable,
+          "hover:bg-gray-100 font-medium rounded-lg": variant === "nude",
+          "text-sm px-5 py-2.5": size === "md",
+          "px-3 py-2 text-sm": size === "sm",
+          "px-3 py-2 text-xs": size === "xs",
+          "cursor-not-allowed opacity-75": disable,
+        },
+        className
+      )}
+      disabled={disable}
       onClick={onClick}
     >
+      {loading && <Spin />}
       {startIcon}
       {children}
       {endIcon}
@@ -42,6 +45,7 @@ export function Button({
 
 type ButtonProps = PropsWithChildren<{
   disabled?: boolean;
+  loading?: boolean;
   variant?: "primary" | "nude";
   size?: "md" | "sm" | "xs";
   className?: string;
