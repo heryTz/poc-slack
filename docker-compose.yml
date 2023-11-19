@@ -30,7 +30,11 @@ services:
       - ./back/src/:/app/src
       - ./back/nest-cli.json:/app/nest-cli.json
       - ./back/test/:/app/test
+      - novity_slack_db:/app/prisma/dev.db
     ports:
       - 3000:3000
     env_file:
       - ./back/.env
+
+volumes:
+  novity_slack_db:
