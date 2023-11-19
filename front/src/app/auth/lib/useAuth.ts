@@ -22,10 +22,10 @@ export const useUserStore = create(
       setUser: (user: UserResponse | null) => set({ user }),
       setTokenData: (token: string, refreshToken: string) =>
         set({ token, refreshToken }),
-      reset: () => set({ user: undefined, token: null, refreshToken: null }),
+      reset: () => set({ user: null, token: null, refreshToken: null }),
     }),
-    { name: "user-storage" },
-  ),
+    { name: "user-storage" }
+  )
 );
 
 export enum AuthStatus {

@@ -9,6 +9,7 @@ import { Badge } from "src/components/badge";
 import { useUser } from "src/app/auth/lib/useUser";
 
 function ChannelLayoutComponent() {
+  const { logout } = useAuth();
   const { user } = useUser();
 
   return (
@@ -19,6 +20,12 @@ function ChannelLayoutComponent() {
         className="bg-slate-50"
         appBarClassName="!bg-slate-50"
         contentClassName="gap-4 p-6 flex-1"
+        titleMenus={[
+          {
+            label: "Déconnexion",
+            onClick: logout,
+          },
+        ]}
       >
         <ChannelMenu
           title="Canaux"
