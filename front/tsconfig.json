@@ -25,6 +25,6 @@
       "src/*": ["src/*"]
     }
   },
-  "include": ["src"],
+  "include": ["src", "gen-api-sdk.js"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
