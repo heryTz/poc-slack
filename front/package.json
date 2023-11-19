@@ -19,8 +19,11 @@
     "lodash": "^4.17.21",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.48.2",
+    "react-query": "^3.39.3",
     "react-router-dom": "^6.19.0",
-    "swagger-axios-codegen": "^0.15.12"
+    "swagger-axios-codegen": "^0.15.12",
+    "zustand": "^4.4.6"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.201",

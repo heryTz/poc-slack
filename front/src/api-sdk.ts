@@ -162,6 +162,23 @@ export class AuthService {
   }
 }
 
+export class UsersService {
+  /**
+   *
+   */
+  static me(options: IRequestOptions = {}): Promise<UserResponse> {
+    return new Promise((resolve, reject) => {
+      let url = basePath + '/users/me';
+
+      const configs: IRequestConfig = getConfigs('get', 'application/json', url, options);
+
+      /** 适配ios13，get请求不允许带body */
+
+      axios(configs, resolve, reject);
+    });
+  }
+}
+
 export interface SigninInput {
   /**  */
   email: string;

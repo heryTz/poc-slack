@@ -10,6 +10,9 @@ async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.useGlobalPipes(new ValidationPipe());
   app.useStaticAssets(join(__dirname, '..', 'public'));
+  app.setGlobalPrefix('api', {
+    exclude: ['/'],
+  });
 
   const config = new DocumentBuilder()
     .setTitle('Novity Slack API')

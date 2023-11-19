@@ -1,9 +1,10 @@
 import { createBrowserRouter } from "react-router-dom";
 import { SigninPage } from "./app/auth/signin-page";
 import { SignupPage } from "./app/auth/signup-page";
-import { AuthLayout, ChannelLayout } from "./components/layouts";
 import { OtpPage } from "./app/auth/otp-page";
 import { ChatPage } from "./app/channel/chat-page";
+import { AuthLayout } from "./app/auth/components/auth-layout";
+import { ChannelLayout } from "./app/channel/components/channel-layout";
 
 export const router = createBrowserRouter([
   {
