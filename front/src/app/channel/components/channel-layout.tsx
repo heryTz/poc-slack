@@ -6,23 +6,15 @@ import { ColumnLayout } from "src/components/layouts";
 import { IconButton } from "src/components/button";
 import { ChannelMenu } from "src/components/menu";
 import { Badge } from "src/components/badge";
+import { useUser } from "src/app/auth/lib/useUser";
 
-export function ChannelLayout() {
-  const { status } = useAuth();
-  if (status === AuthStatus.Unknown)
-    return (
-      <div className="min-h-screen w-full flex justify-center items-center">
-        <Spin className="!text-blue-800 w-6 h-6" />
-      </div>
-    );
-
-  if (status === AuthStatus.Guest)
-    return <Navigate to="/auth/signin" replace />;
+function ChannelLayoutComponent() {
+  const { user } = useUser();
 
   return (
     <div className="grid grid-cols-[300px_1fr] ">
       <ColumnLayout
-        title="Hery Nirintsoa"
+        title={user.name}
         toolbar={<IconButton Element={PencilSquareIcon} />}
         className="bg-slate-50"
         appBarClassName="!bg-slate-50"
@@ -63,4 +55,19 @@ export function ChannelLayout() {
       {/* <div className="border-l border-slate-50 shadow-xl"></div> */}
     </div>
   );
+}
+
+export function ChannelLayout() {
+  const { status } = useAuth();
+  if (status === AuthStatus.Unknown)
+    return (
+      <div className="min-h-screen w-full flex justify-center items-center">
+        <Spin className="!text-blue-800 w-6 h-6" />
+      </div>
+    );
+
+  if (status === AuthStatus.Guest)
+    return <Navigate to="/auth/signin" replace />;
+
+  return <ChannelLayoutComponent />;
 }

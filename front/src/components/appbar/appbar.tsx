@@ -8,7 +8,7 @@ export function AppBar({ title, toolbar, className }: AppBarProps) {
     <div
       className={classNames(
         "py-3.5 pl-1 pr-3.5 flex items-center justify-between border-b border-slate-200 h-[69px]",
-        className
+        className,
       )}
     >
       <Button

@@ -18,14 +18,14 @@ export function ColumnLayout({
         className={classNames(
           "sticky top-0 bg-white",
           { "z-10": zIndex === 1, "z-20": zIndex === 2, "z-30": zIndex === 3 },
-          appBarClassName
+          appBarClassName,
         )}
         toolbar={toolbar}
       />
       <div
         className={classNames(
           "flex-1 overflow-auto max-h-[calc(100vh-69px)]",
-          contentClassName
+          contentClassName,
         )}
       >
         {children}

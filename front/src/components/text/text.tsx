@@ -7,7 +7,7 @@ export function Text({ as, className, children }: TextProps) {
       <h1
         className={classNames(
           "text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl",
-          className
+          className,
         )}
       >
         {children}
@@ -31,9 +31,7 @@ export function Text({ as, className, children }: TextProps) {
   }
 
   if (as === "h4") {
-    return (
-      <h4 className={classNames("font-bold", className)}>{children}</h4>
-    );
+    return <h4 className={classNames("font-bold", className)}>{children}</h4>;
   }
 
   if (as === "span") {

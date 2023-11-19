@@ -14,12 +14,12 @@ export function useSignin() {
 
 export function useSignup() {
   return useMutation("signup", (body: CreateUserInput) =>
-    AuthService.signup({ body })
+    AuthService.signup({ body }),
   );
 }
 
 export function useVerityOtp() {
   return useMutation("verifyOtp", (body: VerifyOtpInput) =>
-    AuthService.verifyOtp({ body })
+    AuthService.verifyOtp({ body }),
   );
 }

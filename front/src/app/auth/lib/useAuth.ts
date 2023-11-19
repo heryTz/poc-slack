@@ -1,6 +1,8 @@
-import { SigninInput, UserResponse, UsersService } from "src/api-sdk";
+import { UserResponse, UsersService, VerifyOtpInput } from "src/api-sdk";
 import { create } from "zustand";
-import { useSignin } from "./auth.query";
+import { useVerityOtp } from "./auth.query";
+import { updateAxiosInstance } from "src/app/setup-http";
+import { persist } from "zustand/middleware";
 
 type UserStore = {
   user: UserResponse | null | undefined;
@@ -8,16 +10,23 @@ type UserStore = {
   refreshToken: string | null;
   setUser: (user: UserResponse | null) => void;
   setTokenData: (token: string, refreshToken: string) => void;
+  reset: () => void;
 };
 
-export const useUserStore = create<UserStore>((set) => ({
-  user: undefined,
-  token: null,
-  refreshToken: null,
-  setUser: (user: UserResponse | null) => set({ user }),
-  setTokenData: (token: string, refreshToken: string) =>
-    set({ token, refreshToken }),
-}));
+export const useUserStore = create(
+  persist<UserStore>(
+    (set) => ({
+      user: undefined,
+      token: null,
+      refreshToken: null,
+      setUser: (user: UserResponse | null) => set({ user }),
+      setTokenData: (token: string, refreshToken: string) =>
+        set({ token, refreshToken }),
+      reset: () => set({ user: undefined, token: null, refreshToken: null }),
+    }),
+    { name: "user-storage" },
+  ),
+);
 
 export enum AuthStatus {
   Unknown = 0,
@@ -26,8 +35,9 @@ export enum AuthStatus {
 }
 
 export function useAuth() {
-  const { user, setUser } = useUserStore();
-  const { mutateAsync: signin } = useSignin();
+  const { user, setUser, setTokenData, reset } = useUserStore();
+  const { mutateAsync: onVerifyOtp, isLoading: verifyOtpLoading } =
+    useVerityOtp();
 
   const getUser = () => {
     UsersService.me()
@@ -35,8 +45,17 @@ export function useAuth() {
       .catch(() => setUser(null));
   };
 
-  const login = async (input: SigninInput) => {
-    await signin(input);
+  const verifyOtp = async (input: VerifyOtpInput) => {
+    const resp = await onVerifyOtp(input);
+    setUser(resp.data);
+    setTokenData(resp.token, resp.refreshToken);
+    updateAxiosInstance({
+      headers: { Authorization: `Bearer ${resp.token}` },
+    });
+  };
+
+  const logout = () => {
+    reset();
   };
 
   let status: AuthStatus;
@@ -56,6 +75,10 @@ export function useAuth() {
     status,
     user,
     getUser,
-    login,
+    setUser,
+    setTokenData,
+    verifyOtp,
+    verifyOtpLoading,
+    logout,
   };
 }
