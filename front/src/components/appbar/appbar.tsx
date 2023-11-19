@@ -1,10 +1,16 @@
 import { ReactNode } from "react";
 import { Button } from "../button";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
+import classNames from "classnames";
 
-export function AppBar({ title, toolbar }: AppBarProps) {
+export function AppBar({ title, toolbar, className }: AppBarProps) {
   return (
-    <div className="py-3.5 pl-1 pr-3.5 flex items-center justify-between border-b border-slate-200">
+    <div
+      className={classNames(
+        "py-3.5 pl-1 pr-3.5 flex items-center justify-between border-b border-slate-200 h-[69px]",
+        className
+      )}
+    >
       <Button
         variant="nude"
         className="text-left text-base"
@@ -20,4 +26,5 @@ export function AppBar({ title, toolbar }: AppBarProps) {
 type AppBarProps = {
   title: string;
   toolbar?: ReactNode;
+  className?: string;
 };

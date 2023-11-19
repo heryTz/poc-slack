@@ -22,7 +22,9 @@ export function MessageItem({
       <div className="flex flex-col">
         <div className="flex items-center gap-2">
           <Text as="h4">{author}</Text>
-          <Text as="span">{dayjs(createdAt).format("HH h mm")}</Text>
+          <Text as="span" className="font-light text-sm">
+            {dayjs(createdAt).format("HH [h] mm")}
+          </Text>
         </div>
         {msgArray.map((el, i) => (
           <Text key={i} className="text-gray-700">

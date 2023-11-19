@@ -1,11 +1,13 @@
+import { Button } from "src/components/button";
 import { Divider } from "src/components/divider";
-import { ChatLayout } from "src/components/layouts";
+import { MarkdownInput } from "src/components/form";
+import { ColumnLayout } from "src/components/layouts";
 import { MessageItem } from "src/components/message";
 import { Text } from "src/components/text";
 
 export function ChatPage() {
   return (
-    <ChatLayout title="# général">
+    <ColumnLayout zIndex={2} title="# général">
       <div className="px-6 pt-6">
         <Text as="h3" className="mb-2">
           # général
@@ -41,6 +43,13 @@ export function ChatPage() {
           />
         ))}
       </div>
-    </ChatLayout>
+      <div className="sticky bottom-0 mx-6 pb-6 bg-white">
+        <MarkdownInput
+          placeholder="Envoyer un message #general"
+          className="!border-gray-400"
+        />
+        <Button className="mt-2">Envoyer</Button>
+      </div>
+    </ColumnLayout>
   );
 }
