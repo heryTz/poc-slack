@@ -15,7 +15,7 @@ services:
       - ./front/vite.config.ts/:/app/vite.config.ts
       - ./front/tailwind.config.js/:/app/tailwind.config.js
     ports:
-      - 3001:5173
+      - 5173:5173
     env_file:
       - ./front/.env
 
@@ -30,7 +30,7 @@ services:
       - ./back/src/:/app/src
       - ./back/nest-cli.json:/app/nest-cli.json
       - ./back/test/:/app/test
-      - novity_slack_db:/app/prisma/dev.db
+      - novity_slack_db:/app/prisma
     ports:
       - 3000:3000
     env_file:
