@@ -19,14 +19,23 @@ export class MessageService {
     return message;
   }
 
-  async find(query: FindMessageQuery): Promise<MessageResponse[]> {
+  async find(
+    userId: number,
+    query: FindMessageQuery,
+  ): Promise<MessageResponse[]> {
     const { receiverId, channelId } = query;
 
     if (!channelId && !receiverId) throw new BadRequestException();
 
     let where = {};
     if (channelId) where = { channelId };
-    else if (receiverId) where = { receiverId };
+    else if (receiverId)
+      where = {
+        OR: [
+          { receiverId, authorId: userId },
+          { receiverId: userId, authorId: receiverId },
+        ],
+      };
 
     return this.prisma.message.findMany({
       where,

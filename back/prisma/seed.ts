@@ -1,12 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 async function main() {
-  await prisma.user.create({
-    data: {
-      email: 'john@john.com',
-      name: 'John',
-    },
-  });
   const admin = await prisma.user.create({
     data: {
       email: 'admin@admin.com',
@@ -15,6 +9,12 @@ async function main() {
   });
   await prisma.channel.create({ data: { name: 'Général', userId: admin.id } });
   await prisma.channel.create({ data: { name: 'Projet', userId: admin.id } });
+  await prisma.user.create({
+    data: {
+      email: 'john@john.com',
+      name: 'John',
+    },
+  });
 }
 main()
   .then(async () => {

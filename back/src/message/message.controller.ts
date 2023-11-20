@@ -11,6 +11,8 @@ import { MessageResponse } from './dto/message.response';
 import { FindMessageQuery } from './dto/find-message.query';
 import { CreateMessageInput } from './dto/create-message.input';
 import { TypingMessageInput } from './dto/typing-message.input';
+import { GetUser } from 'src/auth/decorator/get-user';
+import { UserPayload } from 'src/auth/interfaces/user-payload';
 
 @Controller('message')
 @ApiTags('message')
@@ -21,7 +23,7 @@ export class MessageController {
 
   @Get('find')
   @ApiOkResponse({ type: MessageResponse, isArray: true })
-  find(@Query() query: FindMessageQuery) {
-    return this.messageService.find(query);
+  find(@Query() query: FindMessageQuery, @GetUser() user: UserPayload) {
+    return this.messageService.find(user.id, query);
   }
 }
