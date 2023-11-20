@@ -13,7 +13,9 @@ docker compose up
 Setup **front**
 
 ```bash
-cd front && yarn install && yarn dev
+cd front
+yarn install
+yarn dev
 ```
 
 Setup **back**
