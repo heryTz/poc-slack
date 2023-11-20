@@ -4,7 +4,7 @@ import { useUserStore } from "./auth/lib/useAuth";
 
 export function setupSDK() {
   const instance = axios.create({
-    baseURL: `${import.meta.env.VITE_API_URL}/api`,
+    baseURL: `${import.meta.env.VITE_API_URL}`,
     headers: { Authorization: `Bearer ${useUserStore.getState().token}` },
   });
 
@@ -13,7 +13,7 @@ export function setupSDK() {
 
 export function updateAxiosInstance(config: CreateAxiosDefaults<unknown> = {}) {
   const instance = axios.create({
-    baseURL: `${import.meta.env.VITE_API_URL}/api`,
+    baseURL: `${import.meta.env.VITE_API_URL}`,
     ...config,
   });
   serviceOptions.axios = instance;

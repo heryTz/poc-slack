@@ -21,4 +21,8 @@ export class UsersService {
     if (exist) throw new ConflictException();
     return this.prisma.user.create({ data: { email, name } });
   }
+
+  async find(userId: number) {
+    return this.prisma.user.findMany({ where: { id: { not: userId } } });
+  }
 }

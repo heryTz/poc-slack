@@ -15,4 +15,10 @@ export class UsersController {
   me(@GetUser() user: UserPayload) {
     return this.usersService.findByEmail(user.email);
   }
+
+  @Get('find')
+  @ApiOkResponse({ type: UserResponse, isArray: true })
+  find(@GetUser() user: UserPayload) {
+    return this.usersService.find(user.id);
+  }
 }

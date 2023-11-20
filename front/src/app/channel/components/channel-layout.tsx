@@ -1,19 +1,26 @@
-import { Outlet, Navigate } from "react-router";
+import { Outlet, Navigate, useLocation } from "react-router";
 import { PencilSquareIcon } from "@heroicons/react/24/outline";
 import { AuthStatus, useAuth } from "src/app/auth/lib/useAuth";
 import { Spin } from "src/components/loader";
 import { ColumnLayout } from "src/components/layouts";
 import { IconButton } from "src/components/button";
 import { ChannelMenu } from "src/components/menu";
-import { Badge } from "src/components/badge";
 import { useUser } from "src/app/auth/lib/useUser";
 import { useSocketConnection } from "src/lib/useSocket";
+import { useChannels } from "../lib/channel.query";
+import { useListUser } from "src/app/user/lib/user.query";
 
 function ChannelLayoutComponent() {
+  const { pathname } = useLocation();
   const { logout, token } = useAuth();
   const { user } = useUser();
+  const { data: channelsData, isLoading: loadingChannels } = useChannels();
+  const { data: listUserData, isLoading: listUserLoading } = useListUser();
 
   useSocketConnection({ url: import.meta.env.VITE_WS_URL, token });
+
+  const channels = channelsData ?? [];
+  const users = listUserData ?? [];
 
   return (
     <div className="grid grid-cols-[300px_1fr] ">
@@ -30,34 +37,30 @@ function ChannelLayoutComponent() {
           },
         ]}
       >
-        <ChannelMenu
-          title="Canaux"
-          links={[
-            {
-              label: "général",
-              path: "#general",
-              active: true,
-            },
-            {
-              label: "bugs",
-              path: "#bugs",
-              endIcon: <Badge label={4} type="danger" />,
-            },
-            { label: "tech-qa", path: "#tech-qa" },
-            { label: "tech-pr", path: "#tech-pr" },
-          ]}
-          footer={{
-            label: "Ajouter des cannaux",
-            onClick: () => {},
-          }}
-        />
-        <ChannelMenu
-          title="Messages directs"
-          links={[
-            { label: "John", path: "#john" },
-            { label: "Doe", path: "#doe" },
-          ]}
-        />
+        <div className="flex flex-col gap-6">
+          <ChannelMenu
+            loading={loadingChannels}
+            title="Canaux"
+            links={channels.map((el) => ({
+              label: el.name,
+              path: `/channel/${el.id}`,
+              active: pathname.includes(`/channel/${el.id}`),
+            }))}
+            // footer={{
+            //   label: "Ajouter des cannaux",
+            //   onClick: () => {},
+            // }}
+          />
+          <ChannelMenu
+            loading={listUserLoading}
+            title="Messages directs"
+            links={users.map((el) => ({
+              label: el.name,
+              path: `/message/${el.id}`,
+              active: pathname.includes(`/message/${el.id}`),
+            }))}
+          />
+        </div>
       </ColumnLayout>
       <div className="border-l border-l-slate-50 shadow-lg relative z-20">
         <Outlet />

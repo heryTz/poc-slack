@@ -10,4 +10,7 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 EXPOSE 3000
+RUN npx prisma db reset -f && \
+    npx prisma db push && \
+    npx prisma db seed
 CMD [ "yarn", "start:dev" ]

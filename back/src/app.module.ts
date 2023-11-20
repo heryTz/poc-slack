@@ -7,6 +7,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { MessageModule } from './message/message.module';
 import { EventsModule } from './events/events.module';
+import { ChannelModule } from './channel/channel.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { EventsModule } from './events/events.module';
     }),
     MessageModule,
     EventsModule,
+    ChannelModule,
   ],
 })
 export class AppModule {}

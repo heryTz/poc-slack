@@ -37,6 +37,10 @@ export const router = createBrowserRouter([
         path: "channel/:id",
         element: <ChatPage />,
       },
+      {
+        path: "message/:id",
+        element: <ChatPage />,
+      },
     ],
   },
 ]);

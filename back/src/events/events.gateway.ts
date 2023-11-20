@@ -17,8 +17,8 @@ export class EventsGateway implements OnGatewayDisconnect {
   @WebSocketServer()
   server: Server;
 
-  handleDisconnect(client: any) {
-    console.log('disconnect', client.user);
+  handleDisconnect(client: AppSocket) {
+    console.log('disconnect', client.user?.email);
   }
 
   @SubscribeMessage('setup_room')
