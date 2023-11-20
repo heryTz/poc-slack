@@ -6,6 +6,7 @@ import * as dayjs from 'dayjs';
 import { CreateUserInput } from 'src/users/dto/create-user.input';
 import { VerifyOtpInput } from './dto/verify-otp.input';
 import { JwtService } from '@nestjs/jwt';
+import { UserPayload } from './interfaces/user-payload';
 
 @Injectable()
 export class AuthService {
@@ -47,7 +48,7 @@ export class AuthService {
       data: { otp: null, otpExpiration: null },
     });
 
-    const payload = { sub: user.id, email: user.email };
+    const payload = { id: user.id, email: user.email } as UserPayload;
 
     return {
       token: await this.jwtService.signAsync(payload),

@@ -11,8 +11,14 @@ export function useCreateChannel() {
   );
 }
 
-export function useChannel(id: number) {
-  return useQuery(["channel", id], () =>
-    ChannelService.channel({ id: id?.toString() })
-  );
+type ChannelOptions = {
+  id: number;
+  disabled?: boolean;
+};
+
+export function useChannel({ id, disabled }: ChannelOptions) {
+  return useQuery(["channel", id], {
+    enabled: !disabled,
+    queryFn: () => ChannelService.channel({ id: id?.toString() }),
+  });
 }

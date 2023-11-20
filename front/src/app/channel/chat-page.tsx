@@ -1,43 +1,46 @@
-import { useParams } from "react-router-dom";
-import { Button } from "src/components/button";
 import { Divider } from "src/components/divider";
-import { MarkdownInput } from "src/components/form";
 import { ColumnLayout } from "src/components/layouts";
 import { MessageItem } from "src/components/message";
-import { Text } from "src/components/text";
-import { useChannel } from "./lib/channel.query";
 import { useMessages } from "./lib/message.query";
 import { Spin } from "src/components/loader";
 import "dayjs/locale/fr";
-import dayjs from "dayjs";
+import { ChannelInfo } from "./components/channel-info";
+import { ChatInput } from "./components/chat-input";
+import { useMessageStore } from "./lib/message.store";
+import { ReactNode, useEffect } from "react";
+import { useSocket } from "src/lib/useSocket";
 
-export function ChatPage() {
-  const { id } = useParams<{ id: string }>();
-  const channelId = +(id ?? "0");
-  const { data: channel, isLoading: loadingChannel } = useChannel(channelId);
-  const { isLoading: loadingMessage } = useMessages({
+export function ChatPage({
+  title,
+  description,
+  channelId,
+  receiverId,
+}: ChatPageProps) {
+  const socket = useSocket();
+  const { setMessage, addMessage } = useMessageStore();
+  const messages = useMessageStore((s) => s.messages);
+  const { data: messagesData, isLoading: loadingMessage } = useMessages({
     channelId,
+    receiverId,
   });
 
-  if (loadingChannel || !channel)
-    return (
-      <div className="w-full h-screen flex justify-center items-center">
-        <Spin className="!text-blue-800 w-6 h-6" />
-      </div>
-    );
+  useEffect(() => {
+    socket.on(`send_message`, addMessage);
+
+    return () => {
+      socket.off("send_message");
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [socket.id]);
+
+  useEffect(() => {
+    if (messagesData) setMessage(messagesData);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [messagesData]);
 
   return (
-    <ColumnLayout zIndex={2} title={`# ${channel.name}`} titleMenus={[]}>
-      <div className="px-6 pt-6">
-        <Text as="h3" className="mb-2">
-          # {channel.name}
-        </Text>
-        <Text>
-          Ce canal a été créé le{" "}
-          {dayjs(channel.createdAt).format("DD MMMM YYYY")}. Ceci est le tout
-          début du <b># {channel.name}.</b>
-        </Text>
-      </div>
+    <ColumnLayout zIndex={2} title={`# ${title}`} titleMenus={[]}>
+      <ChannelInfo title={title} description={description} />
       <Divider className="my-6" />
       {loadingMessage ? (
         <div className="h-32 w-full flex justify-center items-center">
@@ -45,41 +48,30 @@ export function ChatPage() {
         </div>
       ) : (
         <div className="px-4 pb-6">
-          {[1, 2, 3, 4].map((el) => (
+          {messages.map((el) => (
             <MessageItem
-              key={el}
-              author={`Author ${el}`}
-              message={"est-ce que staging est dispo ?"}
-              createdAt={new Date()}
-            />
-          ))}
-          <MessageItem
-            author={`Author 5`}
-            avatarSrc="https://picsum.photos/200/200"
-            message={[
-              "Pas de daily ce matin",
-              "Je dois aller faire les vaccins de bébé",
-            ]}
-            createdAt={new Date()}
-          />
-          {[6, 7, 8, 9, 10, 11, 12, 13].map((el) => (
-            <MessageItem
-              key={el}
-              author={`Author ${el}`}
-              message={"est-ce que staging est dispo ?"}
-              createdAt={new Date()}
+              key={el.id}
+              author={el.Author.name}
+              message={el.content}
+              createdAt={new Date(el.createdAt)}
             />
           ))}
         </div>
       )}
-
       <div className="sticky bottom-0 mx-6 pb-6 bg-white">
-        <MarkdownInput
-          placeholder="Envoyer un message #general"
-          className="!border-gray-400"
+        <ChatInput
+          title={title}
+          channelId={channelId}
+          receiverId={receiverId}
         />
-        <Button className="mt-2">Envoyer</Button>
       </div>
     </ColumnLayout>
   );
 }
+
+type ChatPageProps = {
+  title: string;
+  description: ReactNode;
+  channelId?: number;
+  receiverId?: number;
+};

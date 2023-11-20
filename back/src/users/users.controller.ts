@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { UsersService } from './users.service';
 import { UserResponse } from './dto/user.response';
@@ -20,5 +20,11 @@ export class UsersController {
   @ApiOkResponse({ type: UserResponse, isArray: true })
   find(@GetUser() user: UserPayload) {
     return this.usersService.find(user.id);
+  }
+
+  @Get('findOne/:id')
+  @ApiOkResponse({ type: UserResponse })
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.usersService.findOne(id);
   }
 }

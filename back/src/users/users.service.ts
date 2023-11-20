@@ -25,4 +25,11 @@ export class UsersService {
   async find(userId: number) {
     return this.prisma.user.findMany({ where: { id: { not: userId } } });
   }
+
+  async findOne(userId: number) {
+    return this.prisma.user.findFirst({
+      where: { id: userId },
+      select: { id: true, name: true },
+    });
+  }
 }

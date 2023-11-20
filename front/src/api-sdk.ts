@@ -191,6 +191,27 @@ export class UsersService {
       axios(configs, resolve, reject);
     });
   }
+  /**
+   *
+   */
+  static findOne(
+    params: {
+      /**  */
+      id: number;
+    } = {} as any,
+    options: IRequestOptions = {}
+  ): Promise<UserResponse> {
+    return new Promise((resolve, reject) => {
+      let url = basePath + '/api/users/findOne/{id}';
+      url = url.replace('{id}', params['id'] + '');
+
+      const configs: IRequestConfig = getConfigs('get', 'application/json', url, options);
+
+      /** 适配ios13，get请求不允许带body */
+
+      axios(configs, resolve, reject);
+    });
+  }
 }
 
 export class MessageService {
@@ -205,7 +226,7 @@ export class MessageService {
       receiverId?: number;
     } = {} as any,
     options: IRequestOptions = {}
-  ): Promise<any | null> {
+  ): Promise<MessageResponse[]> {
     return new Promise((resolve, reject) => {
       let url = basePath + '/api/message/find';
 
@@ -320,6 +341,44 @@ export interface VerifyOtpResponse {
 
   /**  */
   data: UserResponse;
+}
+
+export interface CreateMessageInput {
+  /**  */
+  content: string;
+
+  /**  */
+  receiverId?: number;
+
+  /**  */
+  channelId?: number;
+}
+
+export interface TypingMessageInput {
+  /**  */
+  receiverId?: number;
+
+  /**  */
+  channelId?: number;
+}
+
+export interface TypingMessageResponse {
+  /**  */
+  Author: UserResponse;
+}
+
+export interface MessageResponse {
+  /**  */
+  id: number;
+
+  /**  */
+  content: string;
+
+  /**  */
+  createdAt: Date;
+
+  /**  */
+  Author: UserResponse;
 }
 
 export interface CreateChannelInput {

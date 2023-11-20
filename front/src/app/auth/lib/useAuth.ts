@@ -3,6 +3,7 @@ import { create } from "zustand";
 import { useVerityOtp } from "./auth.query";
 import { updateAxiosInstance } from "src/app/setup-http";
 import { persist } from "zustand/middleware";
+import { useSocketStore } from "src/lib/useSocket";
 
 type UserStore = {
   user: UserResponse | null | undefined;
@@ -57,6 +58,7 @@ export function useAuth() {
 
   const logout = () => {
     reset();
+    useSocketStore.getState().socket?.close();
   };
 
   let status: AuthStatus;

@@ -13,9 +13,6 @@ export class ChannelService {
   }
 
   findOne(channelId: number) {
-    if (channelId === 0) {
-      return this.prisma.channel.findFirst();
-    }
     return this.prisma.channel.findUnique({
       where: { id: channelId },
     });

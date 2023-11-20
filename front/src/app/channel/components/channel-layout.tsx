@@ -9,15 +9,14 @@ import { useUser } from "src/app/auth/lib/useUser";
 import { useSocketConnection } from "src/lib/useSocket";
 import { useChannels } from "../lib/channel.query";
 import { useListUser } from "src/app/user/lib/user.query";
+import { Text } from "src/components/text";
 
 function ChannelLayoutComponent() {
   const { pathname } = useLocation();
-  const { logout, token } = useAuth();
+  const { logout } = useAuth();
   const { user } = useUser();
   const { data: channelsData, isLoading: loadingChannels } = useChannels();
   const { data: listUserData, isLoading: listUserLoading } = useListUser();
-
-  useSocketConnection({ url: import.meta.env.VITE_WS_URL, token });
 
   const channels = channelsData ?? [];
   const users = listUserData ?? [];
@@ -71,11 +70,18 @@ function ChannelLayoutComponent() {
 }
 
 export function ChannelLayout() {
-  const { status } = useAuth();
-  if (status === AuthStatus.Unknown)
+  const { status, token } = useAuth();
+
+  const socket = useSocketConnection({
+    url: import.meta.env.VITE_WS_URL,
+    token,
+  });
+
+  if (status === AuthStatus.Unknown || !socket)
     return (
-      <div className="min-h-screen w-full flex justify-center items-center">
+      <div className="min-h-screen w-full flex flex-col justify-center items-center gap-2">
         <Spin className="!text-blue-800 w-6 h-6" />
+        {socket === null && <Text>Tentative de connexion</Text>}
       </div>
     );
 
