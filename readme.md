@@ -1,5 +1,7 @@
 # Novity Slack
 
+![](https://github.com/heryTz/novity-slack/blob/main/demo.gif)
+
 ## Setup with docker
 
 The easiest way is to use docker.
