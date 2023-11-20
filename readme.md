@@ -2,6 +2,8 @@
 
 ![](https://github.com/heryTz/novity-slack/blob/main/demo.gif)
 
+⚠️ Authentication is password less. The otp code is in the terminal
+
 ## Setup with docker
 
 The easiest way is to use docker.
