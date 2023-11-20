@@ -21,6 +21,7 @@ export function ChatPage() {
       <div className="px-4 pb-6">
         {[1, 2, 3, 4].map((el) => (
           <MessageItem
+            key={el}
             author={`Author ${el}`}
             message={"est-ce que staging est dispo ?"}
             createdAt={new Date()}
@@ -37,6 +38,7 @@ export function ChatPage() {
         />
         {[6, 7, 8, 9, 10, 11, 12, 13].map((el) => (
           <MessageItem
+            key={el}
             author={`Author ${el}`}
             message={"est-ce que staging est dispo ?"}
             createdAt={new Date()}

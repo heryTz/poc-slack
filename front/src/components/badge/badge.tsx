@@ -8,7 +8,7 @@ export function Badge({ label, type = "info" }: BadgeProps) {
         {
           "text-blue-800 bg-blue-200": type === "info",
           "text-white bg-red-500": type === "danger",
-        }
+        },
       )}
     >
       {label}

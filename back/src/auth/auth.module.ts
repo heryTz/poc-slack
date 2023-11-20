@@ -8,6 +8,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './guard/auth.guard';
+import { AuthWsGuard } from './guard/auth-ws.guard';
 
 @Module({
   imports: [
@@ -28,10 +29,12 @@ import { AuthGuard } from './guard/auth.guard';
   providers: [
     AuthService,
     PrismaService,
+    AuthWsGuard,
     {
       provide: APP_GUARD,
       useClass: AuthGuard,
     },
   ],
+  exports: [AuthWsGuard],
 })
 export class AuthModule {}

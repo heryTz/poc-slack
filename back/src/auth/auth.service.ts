@@ -2,7 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { UsersService } from 'src/users/users.service';
 import { UtilService } from 'src/util/util.service';
-import dayjs from 'dayjs';
+import * as dayjs from 'dayjs';
 import { CreateUserInput } from 'src/users/dto/create-user.input';
 import { VerifyOtpInput } from './dto/verify-otp.input';
 import { JwtService } from '@nestjs/jwt';
@@ -20,6 +20,7 @@ export class AuthService {
     const user = await this.usersService.findByEmail(email);
 
     const digit = this.utilSevice.generateDigit();
+    console.log(digit);
     await this.prisma.user.update({
       where: { email },
       data: { otp: digit, otpExpiration: dayjs().add(1, 'hour').toDate() },
@@ -39,7 +40,7 @@ export class AuthService {
     const user = await this.prisma.user.findUnique({ where: { email, otp } });
     if (!user) throw new UnauthorizedException('otp invalid');
     if (dayjs(user.otpExpiration).isBefore(dayjs()))
-      throw new UnauthorizedException();
+      throw new UnauthorizedException('otp expired');
 
     const data = await this.prisma.user.update({
       where: { email },

@@ -7,7 +7,7 @@ export function Spin({ className }: SpinProps) {
       role="status"
       className={classNames(
         "inline w-4 h-4 text-white animate-spin",
-        className
+        className,
       )}
       viewBox="0 0 100 101"
       fill="none"

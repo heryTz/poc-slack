@@ -5,6 +5,8 @@ import { ConfigModule } from '@nestjs/config';
 import { UtilModule } from './util/util.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { MessageModule } from './message/message.module';
+import { EventsModule } from './events/events.module';
 
 @Module({
   imports: [
@@ -16,6 +18,8 @@ import { join } from 'path';
       rootPath: join(__dirname, '..', '../public'),
       serveRoot: '/public/', // https://stackoverflow.com/questions/68019001/how-to-get-serve-static-images-nestjs
     }),
+    MessageModule,
+    EventsModule,
   ],
 })
 export class AppModule {}

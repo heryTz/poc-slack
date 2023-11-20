@@ -5,7 +5,7 @@
 /** Generate by swagger-axios-codegen */
 /* eslint-disable */
 // @ts-nocheck
-import axiosStatic, { AxiosInstance, AxiosRequestConfig } from 'axios';
+import axiosStatic, { AxiosInstance, AxiosRequestConfig } from "axios";
 
 export interface IRequestOptions extends AxiosRequestConfig {
   /** only in axios interceptor config*/
@@ -33,37 +33,46 @@ export interface ServiceOptions {
 export const serviceOptions: ServiceOptions = {};
 
 // Instance selector
-export function axios(configs: IRequestConfig, resolve: (p: any) => void, reject: (p: any) => void): Promise<any> {
+export function axios(
+  configs: IRequestConfig,
+  resolve: (p: any) => void,
+  reject: (p: any) => void,
+): Promise<any> {
   if (serviceOptions.axios) {
     return serviceOptions.axios
       .request(configs)
-      .then(res => {
+      .then((res) => {
         resolve(res.data);
       })
-      .catch(err => {
+      .catch((err) => {
         reject(err);
       });
   } else {
-    throw new Error('please inject yourself instance like axios  ');
+    throw new Error("please inject yourself instance like axios  ");
   }
 }
 
-export function getConfigs(method: string, contentType: string, url: string, options: any): IRequestConfig {
+export function getConfigs(
+  method: string,
+  contentType: string,
+  url: string,
+  options: any,
+): IRequestConfig {
   const configs: IRequestConfig = {
     loading: serviceOptions.loading,
     showError: serviceOptions.showError,
     ...options,
     method,
-    url
+    url,
   };
   configs.headers = {
     ...options.headers,
-    'Content-Type': contentType
+    "Content-Type": contentType,
   };
   return configs;
 }
 
-export const basePath = '';
+export const basePath = "";
 
 export interface IList<T> extends Array<T> {}
 export interface List<T> extends Array<T> {}
@@ -102,12 +111,17 @@ export class AuthService {
       /** requestBody */
       body?: SigninInput;
     } = {} as any,
-    options: IRequestOptions = {}
+    options: IRequestOptions = {},
   ): Promise<UserResponse> {
     return new Promise((resolve, reject) => {
-      let url = basePath + '/auth/signin';
+      let url = basePath + "/auth/signin";
 
-      const configs: IRequestConfig = getConfigs('post', 'application/json', url, options);
+      const configs: IRequestConfig = getConfigs(
+        "post",
+        "application/json",
+        url,
+        options,
+      );
 
       let data = params.body;
 
@@ -124,12 +138,17 @@ export class AuthService {
       /** requestBody */
       body?: CreateUserInput;
     } = {} as any,
-    options: IRequestOptions = {}
+    options: IRequestOptions = {},
   ): Promise<UserResponse> {
     return new Promise((resolve, reject) => {
-      let url = basePath + '/auth/signup';
+      let url = basePath + "/auth/signup";
 
-      const configs: IRequestConfig = getConfigs('post', 'application/json', url, options);
+      const configs: IRequestConfig = getConfigs(
+        "post",
+        "application/json",
+        url,
+        options,
+      );
 
       let data = params.body;
 
@@ -146,12 +165,17 @@ export class AuthService {
       /** requestBody */
       body?: VerifyOtpInput;
     } = {} as any,
-    options: IRequestOptions = {}
+    options: IRequestOptions = {},
   ): Promise<VerifyOtpResponse> {
     return new Promise((resolve, reject) => {
-      let url = basePath + '/auth/verifyOtp';
+      let url = basePath + "/auth/verifyOtp";
 
-      const configs: IRequestConfig = getConfigs('post', 'application/json', url, options);
+      const configs: IRequestConfig = getConfigs(
+        "post",
+        "application/json",
+        url,
+        options,
+      );
 
       let data = params.body;
 
@@ -168,9 +192,14 @@ export class UsersService {
    */
   static me(options: IRequestOptions = {}): Promise<UserResponse> {
     return new Promise((resolve, reject) => {
-      let url = basePath + '/users/me';
+      let url = basePath + "/users/me";
 
-      const configs: IRequestConfig = getConfigs('get', 'application/json', url, options);
+      const configs: IRequestConfig = getConfigs(
+        "get",
+        "application/json",
+        url,
+        options,
+      );
 
       /** 适配ios13，get请求不允许带body */
 

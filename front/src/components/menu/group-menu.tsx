@@ -14,7 +14,7 @@ export function GroupMenu({ links }: GroupMenuProps) {
               "hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:text-blue-700":
                 !el.active,
               "bg-blue-700 text-white": el.active,
-            }
+            },
           )}
         >
           {el.label}

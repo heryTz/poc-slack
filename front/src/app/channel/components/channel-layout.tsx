@@ -6,27 +6,29 @@ import { ColumnLayout } from "src/components/layouts";
 import { IconButton } from "src/components/button";
 import { ChannelMenu } from "src/components/menu";
 import { Badge } from "src/components/badge";
+import { useUser } from "src/app/auth/lib/useUser";
+import { useSocketConnection } from "src/lib/useSocket";
 
-export function ChannelLayout() {
-  const { status } = useAuth();
-  if (status === AuthStatus.Unknown)
-    return (
-      <div className="min-h-screen w-full flex justify-center items-center">
-        <Spin className="!text-blue-800 w-6 h-6" />
-      </div>
-    );
+function ChannelLayoutComponent() {
+  const { logout, token } = useAuth();
+  const { user } = useUser();
 
-  if (status === AuthStatus.Guest)
-    return <Navigate to="/auth/signin" replace />;
+  useSocketConnection({ url: import.meta.env.VITE_WS_URL, token });
 
   return (
     <div className="grid grid-cols-[300px_1fr] ">
       <ColumnLayout
-        title="Hery Nirintsoa"
+        title={user.name}
         toolbar={<IconButton Element={PencilSquareIcon} />}
         className="bg-slate-50"
         appBarClassName="!bg-slate-50"
         contentClassName="gap-4 p-6 flex-1"
+        titleMenus={[
+          {
+            label: "Déconnexion",
+            onClick: logout,
+          },
+        ]}
       >
         <ChannelMenu
           title="Canaux"
@@ -63,4 +65,19 @@ export function ChannelLayout() {
       {/* <div className="border-l border-slate-50 shadow-xl"></div> */}
     </div>
   );
+}
+
+export function ChannelLayout() {
+  const { status } = useAuth();
+  if (status === AuthStatus.Unknown)
+    return (
+      <div className="min-h-screen w-full flex justify-center items-center">
+        <Spin className="!text-blue-800 w-6 h-6" />
+      </div>
+    );
+
+  if (status === AuthStatus.Guest)
+    return <Navigate to="/auth/signin" replace />;
+
+  return <ChannelLayoutComponent />;
 }

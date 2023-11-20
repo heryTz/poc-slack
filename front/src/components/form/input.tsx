@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import { ChangeEventHandler } from "react";
 
 export function Input({
   label,
@@ -6,6 +7,8 @@ export function Input({
   placeholder,
   type = "text",
   error,
+  value,
+  onChange,
 }: InputProps) {
   return (
     <div>
@@ -30,6 +33,8 @@ export function Input({
             error,
         })}
         placeholder={placeholder}
+        value={value}
+        onChange={onChange}
       />
       {error && (
         <p className="mt-2 text-sm text-red-600 dark:text-red-500">{error}</p>
@@ -44,4 +49,6 @@ type InputProps = {
   label?: string;
   placeholder?: string;
   error?: string;
+  value: string;
+  onChange: ChangeEventHandler<HTMLInputElement>;
 };

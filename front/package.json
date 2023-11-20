@@ -13,6 +13,8 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.0.18",
+    "@hookform/resolvers": "^3.3.2",
+    "@tippyjs/react": "^4.2.6",
     "axios": "^1.6.2",
     "classnames": "^2.3.2",
     "dayjs": "^1.11.10",
@@ -22,7 +24,9 @@
     "react-hook-form": "^7.48.2",
     "react-query": "^3.39.3",
     "react-router-dom": "^6.19.0",
+    "socket.io-client": "^4.7.2",
     "swagger-axios-codegen": "^0.15.12",
+    "zod": "^3.22.4",
     "zustand": "^4.4.6"
   },
   "devDependencies": {
