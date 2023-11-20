@@ -1,5 +1,9 @@
 import classNames from "classnames";
-import { ChangeEventHandler, FocusEventHandler } from "react";
+import {
+  ChangeEventHandler,
+  FocusEventHandler,
+  KeyboardEventHandler,
+} from "react";
 
 export function MarkdownInput({
   placeholder,
@@ -8,6 +12,7 @@ export function MarkdownInput({
   onChange,
   onFocus,
   onBlur,
+  onKeyDown,
 }: MarkdownInputProps) {
   return (
     <textarea
@@ -21,6 +26,7 @@ export function MarkdownInput({
       onChange={onChange}
       onFocus={onFocus}
       onBlur={onBlur}
+      onKeyDown={onKeyDown}
     ></textarea>
   );
 }
@@ -32,4 +38,5 @@ type MarkdownInputProps = {
   onChange: ChangeEventHandler<HTMLTextAreaElement>;
   onFocus?: FocusEventHandler<HTMLTextAreaElement>;
   onBlur?: FocusEventHandler<HTMLTextAreaElement>;
+  onKeyDown?: KeyboardEventHandler<HTMLTextAreaElement>;
 };

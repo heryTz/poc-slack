@@ -55,6 +55,7 @@ export function ChatInput({ title, channelId, receiverId }: ChatInputProps) {
             onChange={field.onChange}
             onFocus={onFocus}
             onBlur={onBlur}
+            onKeyDown={(e) => e.key === "Enter" && isValid && onSubmit()}
           />
         )}
       />
