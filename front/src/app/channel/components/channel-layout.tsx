@@ -7,10 +7,13 @@ import { IconButton } from "src/components/button";
 import { ChannelMenu } from "src/components/menu";
 import { Badge } from "src/components/badge";
 import { useUser } from "src/app/auth/lib/useUser";
+import { useSocketConnection } from "src/lib/useSocket";
 
 function ChannelLayoutComponent() {
-  const { logout } = useAuth();
+  const { logout, token } = useAuth();
   const { user } = useUser();
+
+  useSocketConnection({ url: import.meta.env.VITE_WS_URL, token });
 
   return (
     <div className="grid grid-cols-[300px_1fr] ">

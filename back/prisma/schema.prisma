@@ -11,11 +11,46 @@ datasource db {
 }
 
 model User {
-  id            Int      @id @default(autoincrement())
-  email         String   @unique
+  id            Int           @id @default(autoincrement())
+  email         String        @unique
   name          String
   otp           String?
   otpExpiration DateTime?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  Message       Message[]
+  Channel       Channel[]
+  MessageRead   MessageRead[]
+}
+
+model Channel {
+  id        Int       @id @default(autoincrement())
+  name      String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  User      User      @relation(fields: [userId], references: [id])
+  userId    Int
+  Message   Message[]
+}
+
+model Message {
+  id          Int           @id @default(autoincrement())
+  content     String
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  User        User          @relation(fields: [userId], references: [id])
+  userId      Int
+  Channel     Channel       @relation(fields: [channelId], references: [id])
+  channelId   Int
+  MessageRead MessageRead[]
+}
+
+model MessageRead {
+  User      User      @relation(fields: [userId], references: [id])
+  Message   Message   @relation(fields: [messageId], references: [id])
+  userId    Int
+  messageId Int
+  at        DateTime?
+
+  @@id([userId, messageId])
 }

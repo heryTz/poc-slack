@@ -35,7 +35,8 @@ export enum AuthStatus {
 }
 
 export function useAuth() {
-  const { user, setUser, setTokenData, reset } = useUserStore();
+  const { user, setUser, setTokenData, reset, token, refreshToken } =
+    useUserStore();
   const { mutateAsync: onVerifyOtp, isLoading: verifyOtpLoading } =
     useVerityOtp();
 
@@ -80,5 +81,7 @@ export function useAuth() {
     verifyOtp,
     verifyOtpLoading,
     logout,
+    token,
+    refreshToken,
   };
 }

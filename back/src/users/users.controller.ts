@@ -2,7 +2,8 @@ import { Controller, Get } from '@nestjs/common';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { UsersService } from './users.service';
 import { UserResponse } from './dto/user.response';
-import { GetUser, UserPayload } from 'src/auth/decorator/get-user';
+import { GetUser } from 'src/auth/decorator/get-user';
+import { UserPayload } from 'src/auth/interfaces/user-payload';
 
 @Controller('users')
 @ApiTags('users')
