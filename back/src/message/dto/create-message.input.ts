@@ -10,5 +10,5 @@ export class CreateMessageInput {
   receiverId?: number;
   @ApiPropertyOptional()
   @IsOptional()
-  channelId: number;
+  channelId?: number;
 }

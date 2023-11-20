@@ -2,7 +2,6 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { CreateMessageInput } from './dto/create-message.input';
 import { FindMessageQuery } from './dto/find-message.query';
-import { PaginatedResponse } from 'src/util/decorators/paginated.response';
 import { MessageResponse } from './dto/message.response';
 
 @Injectable()
@@ -22,7 +21,7 @@ export class MessageService {
   async find(
     authorId: number,
     query: FindMessageQuery,
-  ): Promise<PaginatedResponse<MessageResponse>> {
+  ): Promise<MessageResponse[]> {
     const receiverId = query.receiverId;
     let channelId = query.channelId;
     if (channelId === 0) {
@@ -33,19 +32,13 @@ export class MessageService {
 
     if (!channelId && !receiverId) throw new BadRequestException();
 
-    const where = channelId
-      ? { channelId: +channelId }
-      : { receiverId: +receiverId };
+    let where = {};
+    if (channelId) where = { channelId: +channelId };
+    else if (receiverId) where = { receiverId: +receiverId };
 
-    const data = await this.prisma.message.findMany({
+    return this.prisma.message.findMany({
       where: { ...where, authorId },
       include: { Author: { select: { id: true, name: true, email: true } } },
     });
-
-    return {
-      data,
-      count: data.length,
-      total: data.length,
-    };
   }
 }
