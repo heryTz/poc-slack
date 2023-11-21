@@ -1,12 +1,14 @@
 import classNames from "classnames";
+import { MouseEventHandler } from "react";
 
-export function IconButton({ Element, size = "md" }: IconButtonProps) {
+export function IconButton({ Element, size = "md", onClick }: IconButtonProps) {
   return (
     <button
       className={classNames("rounded-lg hover:bg-gray-100", {
         "p-2": size === "md",
         "p-1": size === "sm",
       })}
+      onClick={onClick}
     >
       <Element
         className={classNames({
@@ -26,4 +28,5 @@ type IconButtonProps = {
       titleId?: string;
     } & React.RefAttributes<SVGSVGElement>
   >;
+  onClick: MouseEventHandler<HTMLButtonElement>;
 };
