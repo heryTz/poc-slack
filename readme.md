@@ -39,6 +39,11 @@ yarn start:dev
 - back: http://localhost:3000
 - doc api: http://localhost:3000/api
 
+## Application default user
+
+- admin@admin.com
+- john@john.com
+
 ## TODO
 
 - [x] All realtime message
