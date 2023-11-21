@@ -16,10 +16,10 @@ export function ChannelMenu() {
         path: `/channel/${el.id}`,
         active: pathname.includes(`/channel/${el.id}`),
       }))}
-      footer={{
-        label: "Ajouter des cannaux",
-        onClick: () => {},
-      }}
+      // footer={{
+      //   label: "Ajouter des cannaux",
+      //   onClick: () => {},
+      // }}
     />
   );
 }

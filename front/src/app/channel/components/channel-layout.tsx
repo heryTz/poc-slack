@@ -1,9 +1,7 @@
 import { Outlet, Navigate } from "react-router";
-import { PencilSquareIcon } from "@heroicons/react/24/outline";
 import { AuthStatus, useAuth } from "src/app/auth/lib/useAuth";
 import { Spin } from "src/components/loader";
 import { ColumnLayout } from "src/components/layouts";
-import { IconButton } from "src/components/button";
 import { useUser } from "src/app/auth/lib/useUser";
 import { useSocketConnection } from "src/lib/useSocket";
 import { Text } from "src/components/text";
@@ -18,7 +16,6 @@ function ChannelLayoutComponent() {
     <div className="grid grid-cols-[300px_1fr] ">
       <ColumnLayout
         title={user.name}
-        toolbar={<IconButton Element={PencilSquareIcon} />}
         className="bg-slate-50"
         appBarClassName="!bg-slate-50"
         contentClassName="gap-4 p-6 flex-1"
