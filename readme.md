@@ -12,6 +12,12 @@ The easiest way is to use docker.
 docker compose up
 ```
 
+If you want to launch and update existing images.
+
+```bash
+docker compose up --build
+```
+
 ## Setup without docker
 
 Setup **front**
