@@ -4,12 +4,12 @@ import { Button } from "../button";
 import { Text } from "../text";
 import { Spin } from "../loader";
 
-export function ChannelMenu({
+export function SidebarMenu({
   title,
   links,
   footer,
   loading,
-}: ChannelMenuProps) {
+}: SidebarMenuProps) {
   return (
     <div className="flex flex-col gap-2">
       <Text>{title}</Text>
@@ -36,7 +36,7 @@ export function ChannelMenu({
   );
 }
 
-type ChannelMenuProps = GroupMenuProps & {
+type SidebarMenuProps = GroupMenuProps & {
   title: string;
   loading?: boolean;
   footer?: {

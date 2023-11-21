@@ -1,3 +1,3 @@
 export * from "./group-menu";
-export * from "./channel-menu";
+export * from "./sidebar-menu";
 export * from "./popover-menu";

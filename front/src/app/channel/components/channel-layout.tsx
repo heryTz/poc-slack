@@ -1,25 +1,18 @@
-import { Outlet, Navigate, useLocation } from "react-router";
+import { Outlet, Navigate } from "react-router";
 import { PencilSquareIcon } from "@heroicons/react/24/outline";
 import { AuthStatus, useAuth } from "src/app/auth/lib/useAuth";
 import { Spin } from "src/components/loader";
 import { ColumnLayout } from "src/components/layouts";
 import { IconButton } from "src/components/button";
-import { ChannelMenu } from "src/components/menu";
 import { useUser } from "src/app/auth/lib/useUser";
 import { useSocketConnection } from "src/lib/useSocket";
-import { useChannels } from "../lib/channel.query";
-import { useListUser } from "src/app/user/lib/user.query";
 import { Text } from "src/components/text";
+import { ChannelMenu } from "./channel-menu";
+import { DirectMessageMenu } from "./direct-message-menu";
 
 function ChannelLayoutComponent() {
-  const { pathname } = useLocation();
   const { logout } = useAuth();
   const { user } = useUser();
-  const { data: channelsData, isLoading: loadingChannels } = useChannels();
-  const { data: listUserData, isLoading: listUserLoading } = useListUser();
-
-  const channels = channelsData ?? [];
-  const users = listUserData ?? [];
 
   return (
     <div className="grid grid-cols-[300px_1fr] ">
@@ -37,34 +30,13 @@ function ChannelLayoutComponent() {
         ]}
       >
         <div className="flex flex-col gap-6">
-          <ChannelMenu
-            loading={loadingChannels}
-            title="Canaux"
-            links={channels.map((el) => ({
-              label: el.name,
-              path: `/channel/${el.id}`,
-              active: pathname.includes(`/channel/${el.id}`),
-            }))}
-            // footer={{
-            //   label: "Ajouter des cannaux",
-            //   onClick: () => {},
-            // }}
-          />
-          <ChannelMenu
-            loading={listUserLoading}
-            title="Messages directs"
-            links={users.map((el) => ({
-              label: el.name,
-              path: `/message/${el.id}`,
-              active: pathname.includes(`/message/${el.id}`),
-            }))}
-          />
+          <ChannelMenu />
+          <DirectMessageMenu />
         </div>
       </ColumnLayout>
       <div className="border-l border-l-slate-50 shadow-lg relative z-20">
         <Outlet />
       </div>
-      {/* <div className="border-l border-slate-50 shadow-xl"></div> */}
     </div>
   );
 }
