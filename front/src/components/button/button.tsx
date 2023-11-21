@@ -32,7 +32,7 @@ export function Button({
       "px-3 py-2 text-xs": size === "xs",
       "cursor-not-allowed opacity-75": disable,
     },
-    className,
+    className
   );
 
   if (to) {
@@ -53,7 +53,7 @@ export function Button({
   );
 }
 
-type ButtonProps = PropsWithChildren<{
+export type ButtonProps = PropsWithChildren<{
   disabled?: boolean;
   loading?: boolean;
   variant?: "primary" | "nude" | "secondary";
