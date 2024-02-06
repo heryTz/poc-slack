@@ -1,4 +1,4 @@
-# Novity Slack
+# POC Slack
 
 ![](https://github.com/heryTz/novity-slack/blob/main/demo.gif)
 
